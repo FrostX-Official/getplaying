@@ -4,6 +4,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GetPlaying - Access Token</title>
+
+    <style>
+        body {
+            background-color: black;
+            color: black;
+            overflow: hidden;
+        }
+
+        .notfoundtoken {
+            text-align: center;
+            font-size: 8vmax;
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -48,8 +62,26 @@
             console.log(text);
         }
 
-        const parsedURL = parseURLParams(window.location.href)
-        copy("?code="+parsedURL["code"])
+        var parsedURL = parseURLParams(window.location.href)
+        console.log("started checking url");
+        if (parsedURL) {
+            if(parsedURL.hasOwnProperty("code")) {
+                console.log("found code in parsed url! copying.")
+                copy("?code="+parsedURL["code"])
+            } else {
+                console.log("no code in parsed url");
+                var text = document.createElement("p")
+                text.innerHTML = "not found token in url,<br>please dont visit this site for no reason";
+                text.classList.add("notfoundtoken")
+                document.body.appendChild(text)
+            }
+        } else {
+            console.log("parsed url is none lol");
+            var text = document.createElement("p")
+            text.innerHTML = "not found token in url,<br>please dont visit this site for no reason";
+            text.classList.add("notfoundtoken")
+            document.body.appendChild(text)
+        }
     </script>
 </body>
 </html>
